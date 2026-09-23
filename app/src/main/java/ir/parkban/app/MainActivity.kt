@@ -2,30 +2,40 @@ package ir.parkban.app
 
 import android.app.Activity
 import android.os.Bundle
+import android.graphics.Color
+import android.widget.TextView
 import android.webkit.WebView
 import android.webkit.WebViewClient
 
 class MainActivity : Activity() {
 
-    private lateinit var webView: WebView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        webView = WebView(this)
+        try {
+            val webView = WebView(this)
 
-        webView.webViewClient = WebViewClient()
+            webView.webViewClient = WebViewClient()
+            webView.settings.javaScriptEnabled = true
+            webView.settings.domStorageEnabled = true
 
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
+            setContentView(webView)
 
-        setContentView(webView)
+            webView.loadUrl("http://park-ban.ir/")
 
-        webView.loadUrl("http://park-ban.ir/")
-    }
+        } catch (e: Throwable) {
 
-    override fun onDestroy() {
-        webView.destroy()
-        super.onDestroy()
+            val errorText = TextView(this)
+            errorText.setTextColor(Color.RED)
+            errorText.textSize = 18f
+            errorText.setPadding(30, 50, 30, 30)
+
+            errorText.text =
+                "خطا در اجرای ParkBan\n\n" +
+                "نوع خطا:\n${e.javaClass.name}\n\n" +
+                "پیام:\n${e.message}"
+
+            setContentView(errorText)
+        }
     }
 }
