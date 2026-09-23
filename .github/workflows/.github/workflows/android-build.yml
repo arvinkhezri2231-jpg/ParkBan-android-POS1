@@ -1,4 +1,4 @@
-name: ParkBan APK Builder
+name: ParkBan APK Builder v2
 
 on:
   workflow_dispatch:
