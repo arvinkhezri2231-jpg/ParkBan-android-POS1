@@ -7,10 +7,12 @@ import android.webkit.WebViewClient
 
 class MainActivity : Activity() {
 
+    private lateinit var webView: WebView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val webView = WebView(applicationContext)
+        webView = WebView(this)
 
         webView.webViewClient = WebViewClient()
 
@@ -20,5 +22,10 @@ class MainActivity : Activity() {
         setContentView(webView)
 
         webView.loadUrl("http://park-ban.ir/")
+    }
+
+    override fun onDestroy() {
+        webView.destroy()
+        super.onDestroy()
     }
 }
